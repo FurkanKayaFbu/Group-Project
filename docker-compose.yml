@@ -1,0 +1,33 @@
+version: "3.8"
+
+services:
+  db:
+    image: postgres:15
+    container_name: postgres_db
+    environment:
+      POSTGRES_DB: studentdb
+      POSTGRES_USER: studentuser
+      POSTGRES_PASSWORD: studentpass
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    networks:
+      - sis_network
+
+  app:
+    build: .
+    container_name: cpp_app
+    depends_on:
+      - db
+    environment:
+      DB_HOST: db
+      DB_NAME: studentdb
+      DB_USER: studentuser
+      DB_PASSWORD: studentpass
+    networks:
+      - sis_network
+
+volumes:
+  db_data:
+
+networks:
+  sis_network:
