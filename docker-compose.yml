@@ -1,1 +1,41 @@
 # Week 1 docker-compose placeholder
+version: "3.8"
+
+services:
+  db:
+    image: postgres:latest
+    container_name: sis-postgres
+    environment:
+      POSTGRES_DB: studentdb
+      POSTGRES_USER: studentuser
+      POSTGRES_PASSWORD: studentpass
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    networks:
+      - sis_network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U studentuser"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  app:
+    build: .
+    container_name: sis-app
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      DB_HOST: db
+      DB_NAME: studentdb
+      DB_USER: studentuser
+      DB_PASSWORD: studentpass
+    networks:
+      - sis_network
+    command: ["./build/sis-app"]
+
+networks:
+  sis_network:
+
+volumes:
+  db_data:
