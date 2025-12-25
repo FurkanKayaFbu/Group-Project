@@ -1,24 +1,53 @@
 # Contributing to Student Information System
 
-Hello Team! To maintain high code quality and satisfy our project requirements, please follow these guidelines:
+Welcome! Please follow the workflow below to ensure consistency across the project.
 
-## Branching Strategy
-* All development should be done in `develop` or feature branches (e.g., `feature/database-setup`).
-* **Direct pushes to `main` are strictly prohibited.**
+---
 
-## Commit Messages
-We follow the semantic commit format to keep our history clean:
-* `feat:` for new features (e.g., `feat: add student search`)
-* `fix:` for bug fixes
-* `docs:` for documentation changes
-* `refactor:` for code changes that neither fix a bug nor add a feature
+## 🚩 Branching Strategy
 
-## Pull Request (PR) Process
-1. Push your changes to your feature branch.
-2. Open a PR against the `develop` branch.
-3. Assign at least one teammate for **Peer Review**.
-4. Once approved, the PR can be merged.
+- Do **not** push directly to `main`
+- Every task/issue should have its own branch:
 
-## Task Management
-* Ensure your task is moved to "In Progress" on the GitHub Project Board before starting.
-* Link your PR to the relevant Issue (e.g., "Closes #1").
+
+
+**Examples:**
+
+> ❗ There is **no `develop` branch** in this project.
+
+---
+
+## 💬 Commit Message Rules
+
+| Type | Example |
+|------|----------|
+| feat | `feat: add Docker Compose setup` |
+| fix | `fix: correct port mapping for nginx` |
+| docs | `docs: update contributing guide` |
+| refactor | `refactor: improve Dockerfile structure` |
+
+---
+
+## 🔁 Pull Request Process
+
+1. Work on your issue branch
+2. Push your branch
+3. Open a PR to `main`
+4. In PR description, include:
+5. Assign reviewer, wait for approval
+6. PM merges the PR
+
+---
+
+## 📌 Project Board & Issues
+
+- Move issue card to **In Progress** before starting
+- Link PR to related issue
+- Move to **Done** only after merge
+
+---
+
+## 🎯 Workflow Summary
+
+
+---
