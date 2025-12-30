@@ -12,6 +12,8 @@ public:
    DatabaseManager(const std::string& connStr);
    bool connect();
    void disconnect();
+   void createTable();
+   void insertStudent(const std::string& name, const std::string& email);
 };
 
 #endif
