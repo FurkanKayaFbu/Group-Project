@@ -2,7 +2,7 @@
 
 services:
   db:
-    image: postgres:latest
+    image: postgres:16
     container_name: sis-postgres
     environment:
       POSTGRES_DB: studentdb
