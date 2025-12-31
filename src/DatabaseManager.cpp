@@ -38,11 +38,15 @@ void DatabaseManager::createTable() {
             //Work ensures command works safely.
             pqxx::work w(c);
 
+            w.exec("DROP TABLE IF EXISTS students;");
+
             // The SQL Commands
-            std::string sql = "CREATE TABLE IF NOT EXISTS students ("
-                              "id SERIAL PRIMARY KEY,"
+            std::string sql = "CREATE TABLE students ("
+                              "id INT PRIMARY KEY,"
                               "name VARCHAR(100) NOT NULL,"
-                              "email VARCHAR(100) NOT NULL);";
+                              "surname VARCHAR(100) NOT NULL,"
+                              "department VARCHAR(100) NOT NULL,"
+                              "email VARCHAR(100) NOT NULL UNIQUE);";
 
             w.exec(sql);
             w.commit(); // Saves the changes
@@ -53,22 +57,113 @@ void DatabaseManager::createTable() {
     }
 }
 
-void DatabaseManager::insertStudent(const std::string& name, const std::string& email) {
+//Insertion Function to insert student information
+void DatabaseManager::insertStudent(int id, const std::string& name, const std::string& surname, const std::string& department, const std::string& email) {
     try {
         pqxx::connection c(connectionString);
         if (c.is_open()) {
             pqxx::work w(c);
 
             // The SQL Command
-            std::string sql = "INSERT INTO students (name, email) VALUES ("
-                              + w.quote(name) + ", "
-                              + w.quote(email) + ");";
+            std::string sql = "INSERT INTO students (id, name, surname, department, email) VALUES ("
+                            + w.quote(id) + ", "
+                            + w.quote(name) + ", "
+                            + w.quote(surname) + ", "
+                            + w.quote(department) + ", "
+                            + w.quote(email) + ");";
 
             w.exec(sql);
-            w.commit(); // Save the changes
+            w.commit();
             std::cout << "Inserted student: " << name << std::endl;
         }
     } catch (const std::exception &e) {
         std::cerr << "Insert Failed: " << e.what() << std::endl;
+    }
+}
+
+//Read Function to list students
+void DatabaseManager::readStudents() {
+    try {
+        pqxx::connection c(connectionString);
+        if (c.is_open()) {
+            pqxx::work w(c);
+
+            // SELECT all columns from  table
+            std::string sql = "SELECT id, name, surname, department, email FROM students";
+
+            // Execute query and store results
+            pqxx::result R = w.exec(sql);
+
+            std::cout << "\n--- Student List (" << R.size() << " entries) ---" << std::endl;
+
+            // Loop through each row in the result
+            for (const auto &row : R) {
+                std::cout << "ID: " << row["id"].c_str()
+                          << " | Name: " << row["name"].c_str()
+                          << " " << row["surname"].c_str()
+                          << " | Dept: " << row["department"].c_str()
+                          << " | Email: " << row["email"].c_str()
+                          << std::endl;
+            }
+            std::cout << "-----------------------------------\n" << std::endl;
+        }
+    } catch (const std::exception &e) {
+        std::cerr << "Read Failed: " << e.what() << std::endl;
+    }
+}
+
+
+void DatabaseManager::updateStudent(int id, const std::string& name, const std::string& surname, const std::string& department, const std::string& email) {
+    try {
+        pqxx::connection c(connectionString);
+        if (c.is_open()) {
+            pqxx::work w(c);
+
+            // SQL Command: Updates fields WHERE the id matches
+            std::string sql = "UPDATE students SET "
+                            "name = " + w.quote(name) + ", "
+                            "surname = " + w.quote(surname) + ", "
+                            "department = " + w.quote(department) + ", "
+                            "email = " + w.quote(email) +
+                            " WHERE id = " + w.quote(id) + ";";
+
+            // Execute and store the result
+            pqxx::result R = w.exec(sql);
+            w.commit();
+
+            // Checks if any rows were affected
+            if (R.affected_rows() > 0) {
+                std::cout << "Success: Updated info for Student ID " << id << std::endl;
+            } else {
+                std::cout << "Warning: No student found with ID " << id << ". Nothing updated." << std::endl;
+            }
+        }
+    } catch (const std::exception &e) {
+        std::cerr << "Update Failed: " << e.what() << std::endl;
+    }
+}
+
+void DatabaseManager::deleteStudent(int id) {
+    try {
+        pqxx::connection c(connectionString);
+        if (c.is_open()) {
+            pqxx::work w(c);
+
+            // SQL Command: Delete the row where the ID matches
+            std::string sql = "DELETE FROM students WHERE id = " + w.quote(id) + ";";
+
+            // Execute the query and store the result
+            pqxx::result R = w.exec(sql);
+            w.commit();
+
+            // Check if a row was deleted
+            if (R.affected_rows() > 0) {
+                std::cout << "Success: Deleted Student ID " << id << std::endl;
+            } else {
+                std::cout << "Warning: Student ID " << id << " not found. Nothing deleted." << std::endl;
+            }
+        }
+    } catch (const std::exception &e) {
+        std::cerr << "Delete Failed: " << e.what() << std::endl;
     }
 }
