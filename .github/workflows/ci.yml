@@ -1,4 +1,4 @@
-=
+
 name: C++ Build Check
 
 on:
@@ -18,3 +18,5 @@ jobs:
 
       - name: Build C++ project
         run: mkdir -p build && cd build && cmake .. && make
+      - name: List build result
+      - run: ls -l build
