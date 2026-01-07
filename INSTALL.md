@@ -12,7 +12,7 @@ Before you start, make sure you have the following installed:
 
 ---
 
-## 🚀 1. Fast Setup with Docker (Recommended)
+## 🚀 Fast Setup with Docker (Recommended)
 Our project is fully containerized. You can run the entire system (App + Database) without installing any local dependencies.
 
 1. **Clone the Repository:**
@@ -25,14 +25,7 @@ Our project is fully containerized. You can run the entire system (App + Databas
 
 To get the system up and running, follow these specialized commands:
 
-### 1. Start the Database Service
-Run the PostgreSQL database in the background (detached mode):
-
-          sudo docker-compose up -d db
-
-Note: This command ensures the database is ready and listening on port 5432 before the application starts.
-
- ### 2.Access the Application Environment
+ ### 1.Access the Application Environment
 Use this command to enter the application container with root privileges and start the interactive terminal:
 
          sudo docker-compose run --rm --user root app bash
@@ -47,7 +40,7 @@ Use this command to enter the application container with root privileges and sta
 (This command will pull the necessary images, set up the network, and connect the application to the database automatically.)
 
 
-### 3.Creating Build and Gettng inside container
+### 2.Creating Build and Gettng inside container
 
 If 'build' doesnt exist you can  Create Build Directory:
 
@@ -57,7 +50,7 @@ If 'build' doesnt exist you can  Create Build Directory:
 
         cd build
 
-### 4.Configure and Run
+### 3.Configure and Run
 Configure with CMake:
 
         cmake ..
@@ -89,5 +82,6 @@ Official Docker Hub Images: You can also find our images directly on Docker Hub:
 🗄️ [Database Service](https://hub.docker.com/repository/docker/fatmadoraneyfbu/sis-project-postgres)
 
 🚀[Application Service](https://hub.docker.com/repository/docker/fatmadoraneyfbu/sis-project-app)
+
 
 
