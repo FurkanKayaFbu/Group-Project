@@ -1,0 +1,1 @@
+/usr/bin/c++ CMakeFiles/sis-app.dir/src/main.cpp.o CMakeFiles/sis-app.dir/src/DatabaseManager.cpp.o -o sis-app  /usr/lib/x86_64-linux-gnu/libpq.so -lpqxx 

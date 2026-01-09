@@ -1,8 +1,36 @@
-name: CI
-on: [push, pull_request]
+name: C++ Build Check
+
+on:
+  push:
+    branches: [ develop ]
+  pull_request:
+    branches: [ develop ]
 
 jobs:
-  placeholder:
+  build:
     runs-on: ubuntu-latest
+
     steps:
-      - run: echo "Week 1 CI placeholder"
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y g++ cmake make libpq-dev libpqxx-dev
+
+      - name: Configure project
+        run: |
+          rm -rf build
+          mkdir build
+          cd build
+          cmake ..
+
+      - name: Build project
+        run: |
+          cd build
+          make
+
+      - name: List build result
+        run: ls -l build
+
