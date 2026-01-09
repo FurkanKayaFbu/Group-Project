@@ -1,7 +1,14 @@
 # 🚀 System Programming C++ Group Project
 
+
+
 ## 📝 Project Overview
 This project is a Student Management System (SIS) developed in C++ as part of our group coursework. Our goal is to build a reliable, high-performance system following professional software development workflows, integrated with a PostgreSQL database and fully containerized with Docker.
+
+# Student Information System 🎓
+This repository contains the final term project for the System Programming course.
+
+**Repository Link:** [https://github.com/FurkanKayaFbu/Group-Project](https://github.com/FurkanKayaFbu/Group-Project)
 
 ## 👥 Team Members
 * **@FurkanKayaFbu** - PM & Documentation (Student-1)
